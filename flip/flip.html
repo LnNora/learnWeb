@@ -7,41 +7,22 @@
 	  ul li{list-style-type:none; margin:10px;}
       
 	  
-	  .flip,.front,.behind{width:200px;height:200px;}
+	  .flip,.front,.behind{width:150px;height:300px;}
 	  .flip{position:relative;transition:1s; transform-style:preserve-3d;}/*过渡效果xs内完成；子元素保留3d位置*/
 	  .front,.behind{position:absolute;top:0px;right:0px;backface-visibility:none; }/*位置跟父元素flip重叠；3d转到背面不可见*/
 	  .front{z-index:2;}/*front的图层在前面*/
 	  .behind{transform:rotateY(-180deg);}/*默认情况下，behind是转到背面*/
 	  .flip:hover{transform:rotateY(180deg);}/*鼠标滑过flip时，flip旋转180度，相当于behind转回正面，front转到背面*/
 	  
-	   img{max-width:100%;}  /*防止图片溢出父元素*/
-	  .behind {
-	          display:flex; justify-content:center;align-items:center; /*文字居中*/
-			  background-color:#D43C33;
-			  color:#fff;
-			  font-family:"Pingfang"
-			  
-			  }
-	  .behind p{padding:0 10px;font-size:10px;}
+	   img{max-width:100%;border-radius:5px;}  /*防止图片溢出父元素*/
+	 
 	  
 	    
 	  
 	  
     </style>
 	
-	<script type="text/javascript">
-	    var num=180;
-		var i=0;
-		function startFlip(){
-		 deg='rotateY('+num+'deg)';/*获取最新的度数*/
-	     document.getElementsByClassName('flip')[i].style.transform=deg;
-		 i++;/*每调用一次，度数增加180*/
-		 if(i<3){
-		 setTimeout(startFlip,2000);}/*调用自身，循环触发*/
-		}
-		setTimeout(startFlip,1000);/*打开网页时就触发startFlip函数*/
-
-    </script>
+	
   
   </head>
 
@@ -50,10 +31,10 @@
 	<li>
 		<div class="flip">
 			<div class="front">
-				<img src="rose.jpg"/>
+				<img src="back.png"/>
 			</div>
 			<div class="behind">
-				<p id="tle">提利尔家族箴言：生生不息（Growing Strong）</p>
+				<img src="j.png"/>
 			</div>
 		</div>
 	</li>
@@ -62,10 +43,10 @@
 	<li>
 		<div class="flip">
 			<div class="front">
-				<img src="rose.jpg"/>
+				<img src="back.png"/>
 			</div>
 			<div class="behind">
-				<p>提利尔家族箴言：生生不息（Growing Strong）</p>
+				<img src="joker1.png"/>
 			</div>
 		</div>
 	</li>
@@ -73,16 +54,35 @@
 	<li>
 		<div class="flip">
 			<div class="front">
-				<img src="rose.jpg"/>
+				<img src="back.png"/>
 			</div>
 			<div class="behind">
-				<p>提利尔家族箴言：生生不息（Growing Strong）</p>
+				<img src="ghost.png"/>
 			</div>
 		</div>
 	</li>
   </u>
  
-  
+  <script type="text/javascript">
+	    var num=180;
+		var i=0;
+		var n=document.getElementsByClassName("flip").length;/*获取类名为flip的元素的数量。注意：script放在head中时，n为0*/
+		function startFlip(){
+		 deg='rotateY('+num+'deg)';/*获取最新的度数*/
+	     document.getElementsByClassName('flip')[i].style.transform=deg;
+		 i++;/*每调用一次，i增加1，即准备执行下一个元素*/
+		 if(i<n){/*如果还未执行完所有元素，那么调用本身，继续执行*/
+		 setTimeout(startFlip,2000);}
+		 else{/*如果执行完了，回到第一个元素，继续执行*/
+		 num+=180;
+		 i=0;
+		 setTimeout(startFlip,2000);
+		 }
+		 
+		}
+		setTimeout(startFlip,1000);/*打开网页时就触发startFlip函数*/
+
+    </script>
   </body>
 
 </html>
